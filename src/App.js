@@ -13,7 +13,8 @@ function App() {
 
   const [toDo, setToDo] = useState([]);
 
-  const[newText,setNewText]=useState("")
+  const[newText,setNewText]=useState("");
+  const[newText2,setNewText2]=useState("");
 
   // Add Task
   const addTask=()=>{
@@ -45,7 +46,7 @@ function App() {
 
       if(ele.id===id)
       {
-        return({...ele,status: !ele.status}) // ...ele pure elemen ko spread kar dega but uske sath status change ho jayega
+        return({...ele,status: !ele.status}) // ...ele pure element ko spread kar dega but uske sath status change ho jayega
       }
 
       return ele;
@@ -54,12 +55,33 @@ function App() {
     setToDo(newToDos);
   }
 
-  // Update Task
-  const updateTask=(id)=>{
+  // Edit Task
+  const editTask=(id)=>{
 
+    const newEdit=toDo.map((ele)=>{
+
+      if(ele.id==id)
+      {
+        // console.log(ele.title);
+        return(ele.title);
+      }
+    })
+    setNewText2(newEdit);
   }
 
+  // Update Task
+  const updateTask=()=>{
 
+    const newTask={
+      id:toDo.length,
+      title:newText2,
+      status:false,
+    };
+
+    setNewText([...toDo,newTask]);
+    // console.log("fkdsjl",newText2);
+
+  }
   return (
     <div className="container App">
       <br /> <br />
@@ -80,11 +102,11 @@ function App() {
 
       <div className="row mt-4">
         <div className="col-lg">
-          <input type="text" className="form-control" />
+          <input value={newText2} onChange={(event)=>setNewText2(event.target.value)} type="text" className="form-control"/>
         </div>
 
         <div className="col-auto">
-          <button className="btn btn-success me-2"  >Update</button>
+          <button className="btn btn-success me-2" onClick={()=> updateTask()} >Update</button>
           <button className="btn btn-warning">Cancel</button>
         </div>
       </div>
@@ -103,7 +125,7 @@ function App() {
             <FontAwesomeIcon icon={faCircleCheck} />
           </span>
 
-          <span title="Edit" onClick={()=>updateTask(ele.id)}>
+          <span title="Edit" onClick={()=>editTask(ele.id)}>
             <FontAwesomeIcon icon={faPen} />
           </span>
 
