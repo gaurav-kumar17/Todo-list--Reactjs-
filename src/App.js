@@ -78,7 +78,7 @@ function App() {
       status:false,
     };
 
-    setNewText([...toDo,newTask]);
+    // setNewText([...toDo,newTask]);
     // console.log("fkdsjl",newText2);
 
   }
